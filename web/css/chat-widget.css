@@ -1,0 +1,122 @@
+#chatFab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #0ea5e9;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: transform 0.2s;
+}
+#chatFab:hover {
+  transform: scale(1.1);
+}
+
+#chatWidget {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 340px;
+  background: #fff;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+#chatHeader {
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+  color: #fff;
+  padding: 15px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chatBody {
+  height: 350px;
+  overflow-y: auto;
+  padding: 15px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+#chatInput {
+  border-top: 1px solid #e2e8f0;
+  padding: 12px;
+  background: #fff;
+}
+
+.chat-msg { margin-bottom:8px; clear:both; }
+.bubble { padding:6px 10px; max-width:75%; border-radius:12px;
+  position:relative; display:inline-block; }
+.bubble .ts { display:block; font-size:.7em; color:#666;
+  margin-top:4px; text-align:right; }
+
+/* User = xanh, phải */
+.chat-msg.user .bubble {
+  background:#dcf8c6; float:right;
+  border-radius:12px 12px 0 12px;
+}
+/* Admin = trắng, trái */
+.chat-msg.admin .bubble {
+  background:#fff; float:left;
+  border:1px solid #ddd;
+  border-radius:12px 12px 12px 0;
+}
+
+.chat-msg {
+  margin-bottom: 10px;
+  max-width: 80%;
+  align-self: flex-start; /* Mặc định là trái (admin) */
+}
+
+.chat-msg.user {
+  align-self: flex-end; /* User sẽ sang phải */
+}
+
+.bubble {
+  padding: 8px 12px;
+  border-radius: 15px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* Bubble user (xanh, phải) */
+.chat-msg.user .bubble {
+  background: #dcf8c6;
+  border-radius: 15px 15px 0 15px;
+  margin-left: 20%;
+}
+
+/* Bubble admin (trắng, trái) */
+.chat-msg.admin .bubble {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px 15px 15px 0;
+  margin-right: 20%;
+}
+
+.bubble .ts {
+  display: block;
+  font-size: 0.7em;
+  color: #666;
+  margin-top: 4px;
+  text-align: right;
+}
