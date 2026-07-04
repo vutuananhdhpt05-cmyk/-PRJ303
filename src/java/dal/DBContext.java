@@ -18,25 +18,24 @@ import java.util.logging.Logger;
  * @author Trung Kien
  */
 public class DBContext {
-    protected Connection connection;
+    protected Connection c;
+
     public DBContext() {
-        //@Students: You are not allowed to edit this method  
         try {
-            Properties properties = new Properties();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("../ConnectDB.properties");
-            try {
-                properties.load(inputStream);
-            } catch (IOException ex) {
-                Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            c = util.DBCPUtils.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error obtaining connection from DBCPUtils: " + e.getMessage());
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            if (c != null && !c.isClosed()) {
+                c.close();
             }
-            String user = properties.getProperty("userID");
-            String pass = properties.getProperty("password");
-            String url = properties.getProperty("url");
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            System.err.println("Error closing connection: " + e.getMessage());
         }
     }
 }
-
