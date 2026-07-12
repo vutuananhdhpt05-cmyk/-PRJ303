@@ -79,7 +79,8 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp)
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        User user = (User) req.getSession(false).getAttribute("user");
+        HttpSession session = req.getSession(false);
+        User user = session != null ? (User) session.getAttribute("user") : null;
         String msg = req.getParameter("message");
         if (user != null && msg != null && !msg.isBlank()) {
             try {

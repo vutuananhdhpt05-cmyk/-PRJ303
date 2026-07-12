@@ -50,16 +50,10 @@ public class StaffContactServlet extends HttpServlet {
                     ? dao.getByEmail(email)
                     : Collections.emptyList();
             for (ContactMessage convo : convos) {
-                // nếu snippet cuối là Admin (tức name == admin full name)
-                if (convo.getName().equalsIgnoreCase(me.getFullName())) {
-                    // tìm trong history của email đó tin nhắn đầu tiên không phải Admin
-                    List<ContactMessage> hist = dao.getByEmail(convo.getEmail());
-                    for (ContactMessage m : hist) {
-                        if (!m.getName().equalsIgnoreCase(me.getFullName())) {
-                            convo.setName(m.getName());
-                            break;
-                        }
-                    }
+                List<ContactMessage> hist = dao.getByEmail(convo.getEmail());
+                if (!hist.isEmpty()) {
+                    // Set conversation name to the customer's name (the sender of the first message)
+                    convo.setName(hist.get(0).getName());
                 }
             }
             // **Expose history** xuống JSP để lấy id cuối
@@ -68,9 +62,14 @@ public class StaffContactServlet extends HttpServlet {
             // 5) Tạo List<ChatItem> để render bong bóng
             // trong AdminContactServlet#doGet, xóa hẳn phần thêm ChatItem theo cm.getReply()
             List<ChatItem> chatItems = new ArrayList<>();
+            String customerName = "";
+            if (!history.isEmpty()) {
+                customerName = history.get(0).getName();
+            }
+            
             for (ContactMessage cm : history) {
-                // nếu chính admin (tên trùng với me.getFullName()), thì sender=ADMIN
-                if (cm.getName().equalsIgnoreCase(me.getFullName())) {
+                // Nếu người gửi không phải là khách hàng, hoặc tên là Admin/Staff -> đó là tin nhắn của Staff/Admin
+                if (!cm.getName().equalsIgnoreCase(customerName) || "Admin".equalsIgnoreCase(cm.getName()) || "Staff".equalsIgnoreCase(cm.getName())) {
                     chatItems.add(new ChatItem(
                             "ADMIN",
                             cm.getMessage(),
