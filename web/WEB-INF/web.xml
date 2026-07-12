@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    <servlet>
-        <servlet-name>temp1</servlet-name>
-        <servlet-class>controller.temp1</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>temp1</servlet-name>
-        <url-pattern>/temp1</url-pattern>
-    </servlet-mapping>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>filter.AuthFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>StaffFilter</filter-name>
+        <filter-class>filter.StaffFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/jsp/cart.jsp</url-pattern>
+        <url-pattern>/jsp/checkout.jsp</url-pattern>
+        <url-pattern>/jsp/profile.jsp</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>StaffFilter</filter-name>
+        <url-pattern>/staff/*</url-pattern>
+        <url-pattern>/jsp/staff_dashboard.jsp</url-pattern>
+        <url-pattern>/jsp/staff_messages.jsp</url-pattern>
+        <url-pattern>/jsp/staff_orderDetails.jsp</url-pattern>
+        <url-pattern>/jsp/staff_orders.jsp</url-pattern>
+        <url-pattern>/jsp/staff_productForm.jsp</url-pattern>
+        <url-pattern>/jsp/staff_products.jsp</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/jsp/admin_dashboard.jsp</url-pattern>
+        <url-pattern>/jsp/admin_reports.jsp</url-pattern>
+    </filter-mapping>
 </web-app>
